@@ -1,0 +1,1 @@
+from swagger_gen.decorators import register_api
