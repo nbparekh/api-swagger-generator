@@ -162,8 +162,15 @@ def discover_and_import_handlers(workspace_root: str, handlers_relative_path: st
 
 def main() -> None:
     workspace_root = os.getcwd()
+
+    # 1. Add workspace root to path if not there
     if workspace_root not in sys.path:
         sys.path.insert(0, workspace_root)
+
+    # 2. Add the "src" directory to Python's search path so "from handlers.exceptions..." works!
+    src_path = os.path.join(workspace_root, "src")
+    if os.path.exists(src_path) and src_path not in sys.path:
+        sys.path.insert(0, src_path)
 
     config = load_config(workspace_root)
     discover_and_import_handlers(workspace_root, config["settings"]["handlers_directory"])
